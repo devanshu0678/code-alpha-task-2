@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🎵 Massom Sharma — Bollywood Player</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── THEME VARIABLES ── */
+[data-theme="dark"]{
+  --bg:#0e0414;
+  --bg2:#150820;
+  --card:rgba(25,8,40,0.9);
+  --card2:rgba(30,10,50,0.8);
+  --border:rgba(255,100,200,0.15);
+  --text:#fff5ff;
+  --muted:#aa88bb;
+  --muted2:rgba(170,100,200,0.2);
+  --shadow:rgba(0,0,0,0.6);
+  --lyrics-bg:rgba(20,5,35,0.95);
+}
+[data-theme="light"]{
+  --bg:#fff0f8;
+  --bg2:#ffe6f5;
+  --card:rgba(255,240,252,0.95);
+  --card2:rgba(255,230,248,0.9);
+  --border:rgba(220,60,150,0.2);
+  --text:#1a0020;
+  --muted:#884466;
+  --muted2:rgba(220,100,180,0.15);
+  --shadow:rgba(180,0,100,0.15);
+  --lyrics-bg:rgba(255,245,252,0.98);
+}
+
+:root{
+  --pink:#ff3cac;
+  --orange:#ff9a00;
+  --yellow:#ffe000;
+  --cyan:#00e5ff;
+  --green:#00ff88;
+  --purple:#bf5fff;
+  --grad:linear-gradient(135deg,#ff3cac,#ff9a00,#ffe000);
+  --grad2:linear-gradient(135deg,#ff3cac,#784ba0,#2b86c5);
+}
+
+html,body{height:100%;overflow-x:hidden;}
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  transition:background 0.4s, color 0.4s;
+}
+
+/* ── ANIMATED BACKGROUND ── */
+.bg-canvas{
+  position:fixed;inset:0;z-index:0;
+  background:var(--bg);
+  overflow:hidden;
+}
+.bg-canvas::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(255,60,172,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 70%, rgba(255,154,0,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(191,95,255,0.08) 0%, transparent 60%);
+  animation:bgPulse 6s ease-in-out infinite alternate;
+}
+@keyframes bgPulse{
+  0%{opacity:0.7;transform:scale(1);}
+  100%{opacity:1;transform:scale(1.05);}
+}
+
+/* Floating particles */
+.particles{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.particle{
+  position:absolute;border-radius:50%;
+  animation:float linear infinite;
+  opacity:0.4;
+}
+@keyframes float{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0;}
+  10%{opacity:0.5;}
+  90%{opacity:0.3;}
+  100%{transform:translateY(-10vh) rotate(720deg);opacity:0;}
+}
+
+/* ── LAYOUT ── */
+.app{
+  position:relative;z-index:1;
+  max-width:460px;margin:0 auto;
+  padding:20px 16px 40px;
+  display:flex;flex-direction:column;gap:14px;
+}
+
+/* ── TOP BAR ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 0;
+}
+.logo{
+  font-family:'Kalam',cursive;
+  font-size:20px;font-weight:700;
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.topbar-actions{display:flex;gap:8px;}
+.icon-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--card2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;
+  transition:all 0.2s;backdrop-filter:blur(10px);
+  color:var(--text);
+}
+.icon-btn:hover{transform:scale(1.1);border-color:var(--pink);}
+
+/* ── MAIN CARD ── */
+.main-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:24px 20px 20px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 20px 60px var(--shadow);
+  position:relative;overflow:hidden;
+}
+.main-card::before{
+  content:'';position:absolute;
+  top:-1px;left:20%;right:20%;height:2px;
+  background:var(--grad);border-radius:2px;
+  opacity:0.8;
+}
+
+/* ── ALBUM ART ── */
+.art-outer{
+  position:relative;margin-bottom:20px;
+}
+.art-ring{
+  width:100%;aspect-ratio:1;max-width:240px;
+  margin:0 auto;position:relative;
+}
+.art-ring::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  background:conic-gradient(var(--pink),var(--orange),var(--yellow),var(--pink));
+  animation:ringRotate 3s linear infinite;
+  opacity:0;transition:opacity 0.4s;
+}
+.art-ring.spinning::before{opacity:1;}
+@keyframes ringRotate{to{transform:rotate(360deg);}}
+
+.art-img-wrap{
+  position:relative;z-index:1;
+  width:100%;height:100%;border-radius:50%;overflow:hidden;
+  border:4px solid var(--bg);
+}
+.art-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.4s;
+}
+.art-ring.spinning .art-img-wrap img{
+  animation:imgSpin 20s linear infinite;
+}
+@keyframes imgSpin{to{transform:rotate(360deg);}}
+
+/* ── VISUALIZER ── */
+.visualizer{
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:3px;height:50px;margin-bottom:16px;
+}
+.bar{
+  width:4px;border-radius:2px 2px 0 0;
+  background:var(--grad);
+  transition:height 0.1s ease;
+  min-height:3px;
+}
+
+/* ── SONG INFO ── */
+.song-info{text-align:center;margin-bottom:16px;}
+.song-title{
+  font-size:22px;font-weight:700;
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1.2;margin-bottom:4px;
+}
+.song-meta{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:1px;}
+.song-meta span{color:var(--orange);font-weight:600;}
+
+/* ── PROGRESS ── */
+.progress-section{margin-bottom:16px;}
+.progress-track{
+  height:5px;border-radius:3px;
+  background:var(--muted2);
+  cursor:pointer;position:relative;margin-bottom:6px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:3px;
+  background:var(--grad);
+  width:0%;transition:width 0.1s linear;
+}
+.time-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:500;}
+
+/* ── CONTROLS ── */
+.controls-row{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-bottom:14px;
+}
+.ctrl{
+  background:none;border:none;cursor:pointer;
+  color:var(--muted);font-size:20px;
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.ctrl:hover{color:var(--text);background:var(--muted2);}
+.ctrl.on{color:var(--pink);}
+
+.play-big{
+  width:62px;height:62px;border-radius:50%;
+  background:var(--grad);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;color:#fff;
+  box-shadow:0 4px 24px rgba(255,60,172,0.5);
+  transition:all 0.15s;margin:0 6px;
+}
+.play-big:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(255,60,172,0.7);}
+.play-big:active{transform:scale(0.96);}
+
+/* ── VOLUME ── */
+.volume-row{
+  display:flex;align-items:center;gap:10px;
+}
+.vol-icon{font-size:16px;min-width:20px;cursor:pointer;}
+input[type=range]{
+  -webkit-appearance:none;flex:1;
+  height:4px;border-radius:2px;cursor:pointer;
+  background:var(--muted2);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;
+  border-radius:50%;background:var(--pink);cursor:pointer;
+  box-shadow:0 0 8px rgba(255,60,172,0.5);
+}
+.vol-label{font-size:11px;color:var(--muted);min-width:32px;text-align:right;}
+
+/* ── LYRICS CARD ── */
+.lyrics-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  backdrop-filter:blur(20px);
+  overflow:hidden;
+  transition:all 0.3s;
+}
+.lyrics-header{
+  padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+}
+.lyrics-label{
+  font-size:12px;font-weight:700;letter-spacing:2px;
+  color:var(--muted);text-transform:uppercase;
+}
+.lyrics-toggle{font-size:18px;transition:transform 0.3s;}
+.lyrics-toggle.open{transform:rotate(180deg);}
+.lyrics-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease;
+}
+.lyrics-body.open{max-height:300px;}
+.lyrics-scroll{
+  padding:16px 18px 20px;
+  max-height:260px;overflow-y:auto;
+  line-height:2.2;text-align:center;
+}
+.lyrics-scroll::-webkit-scrollbar{width:3px;}
+.lyrics-scroll::-webkit-scrollbar-thumb{background:var(--pink);border-radius:2px;}
+.lyric-line{
+  font-size:14px;color:var(--muted);
+  transition:all 0.3s;padding:2px 0;cursor:default;
+  display:block;
+}
+.lyric-line.active{
+  font-size:16px;font-weight:700;
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ── PLAYLIST CARD ── */
+.playlist-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  backdrop-filter:blur(20px);
+  overflow:hidden;
+}
+.playlist-header{
+  padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.playlist-title{
+  font-size:12px;font-weight:700;letter-spacing:2px;
+  color:var(--muted);text-transform:uppercase;
+}
+.badge{
+  font-size:11px;background:var(--grad);
+  color:#fff;padding:2px 10px;border-radius:20px;
+  font-weight:600;
+}
+.playlist-list{max-height:360px;overflow-y:auto;}
+.playlist-list::-webkit-scrollbar{width:3px;}
+.playlist-list::-webkit-scrollbar-thumb{background:var(--pink);border-radius:2px;}
+
+.track-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 18px;cursor:pointer;
+  transition:background 0.15s;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  position:relative;
+}
+.track-item:last-child{border:none;}
+.track-item:hover{background:rgba(255,60,172,0.06);}
+.track-item.active{background:rgba(255,60,172,0.10);}
+.track-item.active::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:var(--grad);
+}
+.t-num{font-size:11px;color:var(--muted);min-width:22px;text-align:center;font-weight:600;}
+.t-eq{display:flex;align-items:flex-end;gap:2px;height:16px;min-width:22px;}
+.t-eq span{
+  width:3px;border-radius:1px;
+  background:var(--grad);
+  animation:teq 0.5s ease infinite alternate;
+}
+.t-eq span:nth-child(1){height:6px;animation-delay:0s;}
+.t-eq span:nth-child(2){height:12px;animation-delay:0.12s;}
+.t-eq span:nth-child(3){height:8px;animation-delay:0.24s;}
+@keyframes teq{from{transform:scaleY(0.3);}to{transform:scaleY(1);}}
+
+.t-art{width:42px;height:42px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1px solid var(--border);}
+.t-info{flex:1;min-width:0;}
+.t-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.track-item.active .t-name{
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.t-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.t-dur{font-size:11px;color:var(--muted);flex-shrink:0;}
+
+/* ── SLEEP TIMER ── */
+.sleep-panel{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  backdrop-filter:blur(20px);
+  padding:16px 18px;
+  display:none;
+}
+.sleep-panel.open{display:block;}
+.sleep-title{
+  font-size:12px;font-weight:700;letter-spacing:2px;
+  color:var(--muted);text-transform:uppercase;margin-bottom:12px;
+}
+.sleep-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.sleep-btn{
+  flex:1;min-width:60px;padding:8px 12px;
+  background:var(--muted2);border:1px solid var(--border);
+  border-radius:12px;cursor:pointer;color:var(--text);
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+  transition:all 0.15s;
+}
+.sleep-btn:hover{background:rgba(255,60,172,0.15);border-color:var(--pink);}
+.sleep-btn.active{background:var(--grad);border-color:transparent;color:#fff;}
+.sleep-status{margin-top:10px;font-size:12px;color:var(--orange);text-align:center;font-weight:600;min-height:18px;}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--grad);color:#fff;
+  padding:10px 22px;border-radius:30px;
+  font-size:13px;font-weight:600;
+  opacity:0;transition:all 0.3s;
+  pointer-events:none;z-index:100;
+  white-space:nowrap;
+  box-shadow:0 4px 20px rgba(255,60,172,0.4);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── KEYBOARD HINT ── */
+.kbd-hint{text-align:center;font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;padding:4px 0;}
+</style>
+</head>
+<body>
+
+<div class="bg-canvas"></div>
+<div class="particles" id="particles"></div>
+<div class="toast" id="toast"></div>
+
+<div class="app">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="logo">🎵 Massom Sharma</div>
+    <div class="topbar-actions">
+      <div class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme">🌙</div>
+      <div class="icon-btn" id="sleepBtn" onclick="toggleSleepPanel()" title="Sleep Timer">⏰</div>
+    </div>
+  </div>
+
+  <!-- Main Player -->
+  <div class="main-card">
+
+    <!-- Album Art -->
+    <div class="art-outer">
+      <div class="art-ring" id="artRing">
+        <div class="art-img-wrap">
+          <img id="albumArt" src="" alt="Album"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visualizer -->
+    <div class="visualizer" id="visualizer"></div>
+
+    <!-- Song Info -->
+    <div class="song-info">
+      <div class="song-title" id="songTitle">Select a Track</div>
+      <div class="song-meta">Massom Sharma · <span id="songAlbum">Haryanvi Hits</span></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-track" id="progressTrack">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="time-row">
+        <span id="timeElapsed">0:00</span>
+        <span id="timeDuration">0:00</span>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-row">
+      <button class="ctrl" id="shuffleBtn" onclick="toggleShuffle()" title="Shuffle">🔀</button>
+      <button class="ctrl" onclick="prevTrack()" title="Prev">⏮</button>
+      <button class="play-big" id="playBtn" onclick="togglePlay()">▶</button>
+      <button class="ctrl" onclick="nextTrack()" title="Next">⏭</button>
+      <button class="ctrl" id="repeatBtn" onclick="toggleRepeat()" title="Repeat">🔁</button>
+    </div>
+
+    <!-- Volume -->
+    <div class="volume-row">
+      <span class="vol-icon" id="volIcon" onclick="muteToggle()">🔊</span>
+      <input type="range" id="volSlider" min="0" max="100" value="80" oninput="setVolume(this.value)"/>
+      <span class="vol-label" id="volLabel">80%</span>
+    </div>
+  </div>
+
+  <!-- Lyrics -->
+  <div class="lyrics-card" id="lyricsCard">
+    <div class="lyrics-header" onclick="toggleLyrics()">
+      <span class="lyrics-label">📝 Lyrics</span>
+      <span class="lyrics-toggle" id="lyricsToggle">⌄</span>
+    </div>
+    <div class="lyrics-body" id="lyricsBody">
+      <div class="lyrics-scroll" id="lyricsScroll"></div>
+    </div>
+  </div>
+
+  <!-- Sleep Timer -->
+  <div class="sleep-panel" id="sleepPanel">
+    <div class="sleep-title">😴 Sleep Timer</div>
+    <div class="sleep-btns">
+      <button class="sleep-btn" onclick="setSleep(5)">5 min</button>
+      <button class="sleep-btn" onclick="setSleep(10)">10 min</button>
+      <button class="sleep-btn" onclick="setSleep(15)">15 min</button>
+      <button class="sleep-btn" onclick="setSleep(30)">30 min</button>
+      <button class="sleep-btn" onclick="setSleep(60)">1 hr</button>
+      <button class="sleep-btn" onclick="cancelSleep()">Cancel</button>
+    </div>
+    <div class="sleep-status" id="sleepStatus"></div>
+  </div>
+
+  <!-- Playlist -->
+  <div class="playlist-card">
+    <div class="playlist-header">
+      <span class="playlist-title">🎶 Playlist</span>
+      <span class="badge" id="trackBadge">10 Tracks</span>
+    </div>
+    <div class="playlist-list" id="playlistEl"></div>
+  </div>
+
+  <div class="kbd-hint">⌨ Space · ← → · ↑↓ Vol · S Shuffle · R Repeat</div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  PLAYLIST DATA
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+const tracks = [
+  { title:"Dj Wale Babu", album:"Haryanvi Hits 2023",
+    art:"https://picsum.photos/seed/ms1/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    lyrics:[
+      "Dj wale babu mera gaana chala do 🎵","Aaj ki raat kuch toh kar dikhao",
+      "Haryanvi dhamaka leke aaye hain","Massom Sharma ki aawaz sunaao",
+      "Nachle nachle saari raat nachle","Dj ki dhun pe jhoomte raho",
+      "Ye Haryana ki shaan hai pyaare","Apna dil khol ke gaate raho 🎶",
+      "Dj wale babu mera gaana chala do","Zara volume badha do aur nachao"
+    ]
+  },
+  { title:"Teri Aakhya Ka Yo Kajal", album:"Haryanvi Superhits",
+    art:"https://picsum.photos/seed/ms2/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    lyrics:[
+      "Teri aakhya ka yo kajal ❤️","Mere dil ko karein pagal",
+      "Ghani sundar lagti hai tu","Jab muskuraaye pal pal",
+      "Haryanvi chhori pyaari badi","Teri adaon pe dil haar gaya",
+      "Massom Sharma tujhe pukare","Tu hi mera dil le gaya 🌹",
+      "Teri aakhya ka yo kajal","Jab dekhoon teri taraf"
+    ]
+  },
+  { title:"Pani Pani", album:"Desi Beat Vol.1",
+    art:"https://picsum.photos/seed/ms3/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    lyrics:[
+      "Pani pani ho gayi main 💦","Tere pyaar mein ho gayi",
+      "Haryanvi beat pe nachungi","Teri baahon mein kho gayi",
+      "Ye dil tera deewana hai","Teri har baat mein jadoo",
+      "Massom Sharma ki awaaz mein","Dub jaata hai ye raho 🎵",
+      "Pani pani ho gayi main","Dj ki dhun pe jhoomti"
+    ]
+  },
+  { title:"Roop Tera Mastana", album:"Desi Tadka",
+    art:"https://picsum.photos/seed/ms4/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    lyrics:[
+      "Roop tera mastana 🌟","Dil mera deewana",
+      "Chal dono milke naachein","Haryanvi taraana",
+      "Massom ki awaaz goonje","Kheton mein aur galiyon mein",
+      "Desi tadka Haryana ka","Basi rahe diliyon mein ❤️",
+      "Roop tera mastana","Pyaar tera anokha"
+    ]
+  },
+  { title:"Bijli Ki Taar", album:"Haryanvi Hits 2022",
+    art:"https://picsum.photos/seed/ms5/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    lyrics:[
+      "Bijli ki taar se kharchi ⚡","Teri yaad ne dil jalaya",
+      "Haryanvi dhun pe naachenge","Massom ne ye gaana sunaya",
+      "Gaon ki galiyan yaad aati","Haryana ki mitti ki mahak",
+      "Bijli si chamke teri jawani","Mann le jaati teri ek jhalak 🌟",
+      "Bijli ki taar se kharchi","Dil mera tadpa de baar baar"
+    ]
+  },
+  { title:"Latth Maar", album:"Superhit Haryanvi",
+    art:"https://picsum.photos/seed/ms6/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+    lyrics:[
+      "Latth maar teri chhori 💪","Dil mera le gayi re",
+      "Haryanvi andaz mein","Dil pagal kar gayi re",
+      "Massom Sharma gaata hai","Tere liye har geet yaar",
+      "Desi dhamaka Haryana ka","Sun le ek baar pyaar 🎶",
+      "Latth maar teri chhori","Nach le aaj ke saath"
+    ]
+  },
+  { title:"Gora Rang", album:"Desi Romance",
+    art:"https://picsum.photos/seed/ms7/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+    lyrics:[
+      "Gora rang tera chand sa 🌙","Nain tere chamakte sitaare",
+      "Haryanvi naaz tere chehre mein","Mann le gaaye lakh naazaare",
+      "Massom dil se gaata hai","Teri taareef dil se yaar",
+      "Gora rang tera sone sa","Tu hi meri jaan bahaar 🌹",
+      "Gora rang tera chand sa","Tere bina soona lagta sansaar"
+    ]
+  },
+  { title:"Chhori Chandrayan", album:"Haryanvi Gold",
+    art:"https://picsum.photos/seed/ms8/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+    lyrics:[
+      "Chhori chandrayan si laage 🚀","Udd gayi mann ki gudiya",
+      "Haryana ki shaan hai tu","Teri hansi ki hai duniya",
+      "Massom Sharma gaye teri baat","Tujhe dekh ke mann jhoomta",
+      "Chhori chandrayan si laage","Tere nainon mein khoomta ⭐",
+      "Chhori chandrayan si laage","Dil mera teri raahon mein"
+    ]
+  },
+  { title:"Tere Bin Nahi Lagda", album:"Love Haryanvi",
+    art:"https://picsum.photos/seed/ms9/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+    lyrics:[
+      "Tere bin nahi lagda dil mera 💔","Teri yaad sataye har pal",
+      "Haryanvi ishq ki kahani hai","Dil roye har subah sanjhal",
+      "Massom tujhe yaad karta hai","Teri baahon mein kho jaana",
+      "Tere bin nahi lagda dil mera ❤️","Tujhe apna kehna aur paana",
+      "Tere bin nahi lagda dil mera","Tu hi meri duniya hai pyaare"
+    ]
+  },
+  { title:"Dance Wali Chhori", album:"Party Anthems",
+    art:"https://picsum.photos/seed/ms10/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+    lyrics:[
+      "Dance wali chhori aai re 💃","Dj ki dhun pe aayi re",
+      "Haryanvi style mein naachti","Dil churake le jayi re",
+      "Massom Sharma ki baat suno","Party mein dhamaka chhod do",
+      "Sab milke jhoomein naachein aaaj 🎉","Ye raat alag rang do",
+      "Dance wali chhori aai re","Nach le saari raat ke saath"
+    ]
+  },
+  { title:"रात के शिकारी", album:"Haryanvi Dhamaka",
+    art:"https://picsum.photos/seed/rks1/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
+    lyrics:[
+      "रात के शिकारी हम हैं यार 🌙","अंधेरे में दुश्मन को मारें",
+      "Massom Sharma ki awaaz goonj rahi","Haryana ke veeron ka naam hai",
+      "रात के अंधेरे से डर nahi lagta","Dil mein hai junoon aur jazba",
+      "रात के शिकारी hum hain pyaare 🔥","Duniya hamare aage jhukti",
+      "Haryanvi dhamaka ye raat ka","Massom ne sunaya ye gaana"
+    ]
+  },
+  { title:"सतनाशी", album:"Haryanvi Superhits Vol.2",
+    art:"https://picsum.photos/seed/stn2/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3",
+    lyrics:[
+      "सतनाशी तेरी adaon ne kiya 😤","Dil mera barbaad kar diya",
+      "Haryanvi andaz mein gaata hoon","Massom ki aawaz pe jhoomta",
+      "सतनाशी teri hansi ne maara","Mann mera pagal ho gaya yaar",
+      "Ye Haryana ki chhori deewani 💃","Teri yaad mein rota hoon main",
+      "सतनाशी सतनाशी teri ada","Dil churane wali baat ada"
+    ]
+  },
+  { title:"चंबल के डाकू", album:"Desi Dhamaka",
+    art:"https://picsum.photos/seed/ckd3/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
+    lyrics:[
+      "चंबल के डाकू hum hain yaar 🤠","Ghaati ghaati mein naam hai hamaara",
+      "Massom Sharma ne gaaya ye geet","Haryanvi dhamaka dil mein samaya",
+      "चंबल की mitti ki khushboo hai","Veeron ka khoon is dharti mein",
+      "डाकू nahi hum dil ke rajaa 👑","Apni dharti ki shaan hain hum",
+      "चंबल के डाकू naam hai hamaara","Duniya jaane Haryana ki baat"
+    ]
+  },
+  { title:"लोफर", album:"Haryanvi Hits 2024",
+    art:"https://picsum.photos/seed/lof4/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3",
+    lyrics:[
+      "लोफर kehte hain log mujhe 😎","Par dil ka hoon main sacha yaar",
+      "Massom Sharma ka andaz hai alag","Haryanvi style mein jeevan pyaar",
+      "लोफर bana tere ishq ne mujhe","Teri baahon mein kho gaya hoon",
+      "Galiyon mein ghoomta rehta hoon ❤️","Teri yaad mein bhatakta hoon",
+      "लोफर kehte sab lekin dil se","Pyaar sachcha hai tera mera"
+    ]
+  },
+  { title:"यारी", album:"Dosti Haryanvi",
+    art:"https://picsum.photos/seed/yar5/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+    lyrics:[
+      "यारी nibhaate hain hum dil se 🤝","Dost ka saath kabhi na chhodte",
+      "Massom Sharma gaaye dosti ka geet","Haryana ki yaarion ki baat",
+      "यारी hai zindagi ki daulat","Dost mile toh sab kuch mila",
+      "Milke jiyenge milke marenge 💪","Ye yaaraan da tashan hai",
+      "यारी यारी yaaraan di yaaraan di","Dil se nibhaate hain hum"
+    ]
+  },
+  { title:"लाइसेंस", album:"Haryanvi Gold 2024",
+    art:"https://picsum.photos/seed/lic6/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
+    lyrics:[
+      "लाइसेंस leke aaya hoon main 🏍️","Sadkon pe dhamakedaar chal",
+      "Massom Sharma ki gaadi chalti","Haryana mein tez raftar hai",
+      "लाइसेंस nahi teri mohabbat ka","Par dil diya hai khulke tujhe",
+      "Chhori tere peechhe phirta hoon 💛","Teri ek jhalak ko taras gaya",
+      "लाइसेंस लाइसेंस le le bhai","Zindagi ki raah chalte raho"
+    ]
+  },
+  { title:"मैडम जी", album:"Haryanvi Romance",
+    art:"https://picsum.photos/seed/mdm7/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
+    lyrics:[
+      "मैडम जी sun lo meri baat 😍","Tum ho meri zindagi ki raat",
+      "Massom Sharma tujhe pukare","Teri ada pe dil fida hai",
+      "मैडम जी ghani sundar ho tum","Haryanvi andaz mein kehta hoon",
+      "Teri hansi pe jaan nisaar hai ❤️","Tu hi meri subah shaam hai",
+      "मैडम जी मैडम जी sun zara","Teri ek nazar ki raah mein hoon"
+    ]
+  },
+  { title:"60 मुक़दमे", album:"Desi Tadka Vol.2",
+    art:"https://picsum.photos/seed/muk8/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+    lyrics:[
+      "60 मुक़दमे hain mere naam pe 😂","Phir bhi dil mein pyaar hai bhaai",
+      "Massom Sharma sunao apni kahaani","Haryana ki alag hi duniya hai",
+      "60 mukadme pe bhi nahi dara","Dil se jeeta hoon main yaar",
+      "Thane wale jaante hain mujhe 💪","Lekin dil ka hoon main sacha",
+      "60 मुक़दमे aur 60 yaad","Phir bhi nachta gaata rehta hoon"
+    ]
+  },
+  { title:"बदमाशों का ब्याह", album:"Haryanvi Wedding Hits",
+    art:"https://picsum.photos/seed/bdb9/400/400",
+    src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+    lyrics:[
+      "बदमाशों का ब्याह ho raha hai 🎊","Poore gaon mein dhamaka hai",
+      "Massom Sharma gaaye shaadi ka geet","Haryanvi dhol baje shor hai",
+      "बदमाशों ki baraat aai re","Naachte gaate aa rahe hain sab",
+      "Dulha ban ke aaya badmaash 💍","Dulhan ne dil chura liya uska",
+      "बदमाशों का ब्याह mubarak ho","Nachle gaale aaj ki raat"
+    ]
+  }
+];
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  STATE
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+let ci=0, playing=false, shuffle=false, repeat=false;
+let muted=false, lastVol=80;
+let sleepTimer=null, sleepEnd=null;
+let lyricsOpen=false;
+let vizBars=[], vizInterval=null;
+const audio=document.getElementById('audio');
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  VISUALIZER SETUP
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function buildVisualizer(){
+  const el=document.getElementById('visualizer');
+  el.innerHTML='';vizBars=[];
+  for(let i=0;i<28;i++){
+    const b=document.createElement('div');
+    b.className='bar';el.appendChild(b);vizBars.push(b);
+  }
+}
+
+function animateViz(){
+  if(vizInterval)clearInterval(vizInterval);
+  vizInterval=setInterval(()=>{
+    vizBars.forEach(b=>{
+      const h=playing ? (Math.random()*40+5) : 3;
+      b.style.height=h+'px';
+    });
+  },80);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  LOAD TRACK
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function loadTrack(i,autoplay=false){
+  ci=i;const t=tracks[i];
+  document.getElementById('albumArt').src=t.art;
+  document.getElementById('songTitle').textContent=t.title;
+  document.getElementById('songAlbum').textContent=t.album;
+  document.getElementById('progressFill').style.width='0%';
+  document.getElementById('timeElapsed').textContent='0:00';
+  document.getElementById('timeDuration').textContent='0:00';
+  audio.src=t.src;
+  if(autoplay){audio.play();playing=true;}
+  renderLyrics(t.lyrics);
+  updatePlayBtn();updateArtRing();renderPlaylist();
+  scrollActive();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  PLAY / PAUSE
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function togglePlay(){
+  if(playing){audio.pause();playing=false;}
+  else{audio.play();playing=true;}
+  updatePlayBtn();updateArtRing();renderPlaylist();
+}
+function updatePlayBtn(){
+  document.getElementById('playBtn').textContent=playing?'⏸':'▶';
+}
+function updateArtRing(){
+  const r=document.getElementById('artRing');
+  playing?r.classList.add('spinning'):r.classList.remove('spinning');
+  animateViz();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  NEXT / PREV
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function nextTrack(){
+  let n;
+  if(shuffle){do{n=Math.floor(Math.random()*tracks.length);}while(n===ci&&tracks.length>1);}
+  else n=(ci+1)%tracks.length;
+  loadTrack(n,playing);
+}
+function prevTrack(){
+  if(audio.currentTime>3){audio.currentTime=0;return;}
+  loadTrack((ci-1+tracks.length)%tracks.length,playing);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  PROGRESS
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+audio.addEventListener('timeupdate',()=>{
+  if(!audio.duration)return;
+  const pct=(audio.currentTime/audio.duration)*100;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('timeElapsed').textContent=fmt(audio.currentTime);
+  updateLyricsHighlight();
+});
+audio.addEventListener('loadedmetadata',()=>{
+  document.getElementById('timeDuration').textContent=fmt(audio.duration);
+});
+audio.addEventListener('ended',()=>{
+  if(repeat){audio.currentTime=0;audio.play();}
+  else nextTrack();
+});
+document.getElementById('progressTrack').addEventListener('click',function(e){
+  const r=this.getBoundingClientRect();
+  audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  VOLUME
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function setVolume(v){
+  audio.volume=v/100;lastVol=+v;muted=v==0;
+  document.getElementById('volLabel').textContent=v+'%';
+  document.getElementById('volIcon').textContent=v==0?'🔇':v<50?'🔉':'🔊';
+}
+function muteToggle(){
+  const s=document.getElementById('volSlider');
+  if(muted){s.value=lastVol;setVolume(lastVol);}
+  else{lastVol=+s.value;s.value=0;setVolume(0);}
+}
+audio.volume=0.8;
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  SHUFFLE / REPEAT
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function toggleShuffle(){
+  shuffle=!shuffle;
+  document.getElementById('shuffleBtn').classList.toggle('on',shuffle);
+  toast(shuffle?'🔀 Shuffle ON':'Shuffle OFF');
+}
+function toggleRepeat(){
+  repeat=!repeat;
+  document.getElementById('repeatBtn').classList.toggle('on',repeat);
+  toast(repeat?'🔁 Repeat ON':'Repeat OFF');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  LYRICS
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function renderLyrics(lines){
+  const el=document.getElementById('lyricsScroll');
+  el.innerHTML=lines.map((l,i)=>`<span class="lyric-line" id="ll${i}">${l}</span>`).join('');
+}
+function toggleLyrics(){
+  lyricsOpen=!lyricsOpen;
+  document.getElementById('lyricsBody').classList.toggle('open',lyricsOpen);
+  document.getElementById('lyricsToggle').classList.toggle('open',lyricsOpen);
+}
+function updateLyricsHighlight(){
+  const lines=tracks[ci].lyrics;
+  const idx=Math.floor((audio.currentTime/Math.max(audio.duration||1,1))*lines.length);
+  lines.forEach((_,i)=>{
+    const el=document.getElementById('ll'+i);
+    if(!el)return;
+    if(i===idx){
+      el.classList.add('active');
+      el.scrollIntoView({block:'nearest',behavior:'smooth'});
+    } else el.classList.remove('active');
+  });
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  SLEEP TIMER
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+let sleepTick=null;
+function setSleep(mins){
+  if(sleepTimer)clearTimeout(sleepTimer);
+  if(sleepTick)clearInterval(sleepTick);
+  sleepEnd=Date.now()+mins*60000;
+  sleepTimer=setTimeout(()=>{audio.pause();playing=false;updatePlayBtn();updateArtRing();toast('😴 Sleep timer ended');},mins*60000);
+  document.querySelectorAll('.sleep-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  sleepTick=setInterval(updateSleepStatus,1000);
+  updateSleepStatus();
+  toast(`⏰ Sleep in ${mins} min`);
+}
+function updateSleepStatus(){
+  if(!sleepEnd){document.getElementById('sleepStatus').textContent='';return;}
+  const rem=Math.max(0,sleepEnd-Date.now());
+  const m=Math.floor(rem/60000),s=Math.floor((rem%60000)/1000);
+  document.getElementById('sleepStatus').textContent=rem>0?`⏰ Stops in ${m}:${s.toString().padStart(2,'0')}`:'Done';
+}
+function cancelSleep(){
+  if(sleepTimer)clearTimeout(sleepTimer);
+  if(sleepTick)clearInterval(sleepTick);
+  sleepTimer=null;sleepEnd=null;
+  document.querySelectorAll('.sleep-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sleepStatus').textContent='';
+  toast('Sleep timer cancelled');
+}
+function toggleSleepPanel(){
+  document.getElementById('sleepPanel').classList.toggle('open');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  THEME TOGGLE
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+let dark=true;
+function toggleTheme(){
+  dark=!dark;
+  document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+  document.getElementById('themeBtn').textContent=dark?'🌙':'☀️';
+  toast(dark?'🌙 Dark Mode':'☀️ Light Mode');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  PLAYLIST
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function renderPlaylist(){
+  const el=document.getElementById('playlistEl');
+  el.innerHTML=tracks.map((t,i)=>`
+    <div class="track-item ${i===ci?'active':''}" id="ti-${i}" onclick="loadTrack(${i},true)">
+      <div class="t-num">
+        ${i===ci&&playing
+          ? `<div class="t-eq"><span></span><span></span><span></span></div>`
+          : i+1}
+      </div>
+      <img class="t-art" src="${t.art}" loading="lazy" alt=""/>
+      <div class="t-info">
+        <div class="t-name">${t.title}</div>
+        <div class="t-sub">${t.album}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function scrollActive(){
+  const el=document.getElementById(`ti-${ci}`);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  PARTICLES
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+function spawnParticles(){
+  const container=document.getElementById('particles');
+  const colors=['#ff3cac','#ff9a00','#ffe000','#00e5ff','#bf5fff','#00ff88'];
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=Math.random()*6+3;
+    p.style.cssText=`
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:-${Math.random()*20}s;
+    `;
+    container.appendChild(p);
+  }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  TOAST
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+let toastT;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  KEYBOARD
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+document.addEventListener('keydown',e=>{
+  if(['INPUT','TEXTAREA'].includes(e.target.tagName))return;
+  const s=document.getElementById('volSlider');
+  switch(e.code){
+    case 'Space': e.preventDefault();togglePlay();break;
+    case 'ArrowRight': nextTrack();break;
+    case 'ArrowLeft':  prevTrack();break;
+    case 'ArrowUp':
+      e.preventDefault();s.value=Math.min(100,+s.value+5);setVolume(s.value);break;
+    case 'ArrowDown':
+      e.preventDefault();s.value=Math.max(0,+s.value-5);setVolume(s.value);break;
+    case 'KeyS': toggleShuffle();break;
+    case 'KeyR': toggleRepeat();break;
+    case 'KeyL': toggleLyrics();break;
+    case 'KeyM': muteToggle();break;
+  }
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+//  INIT
+// ━━━━━━━━━━━━━━━━━━━━━━━━
+buildVisualizer();
+animateViz();
+spawnParticles();
+loadTrack(0,false);
+document.getElementById('trackBadge').textContent=tracks.length+' Tracks';
+// badge already set dynamically above
+</script>
+</body>
+</html>
